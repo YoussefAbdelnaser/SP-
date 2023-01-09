@@ -13,9 +13,6 @@ const Reservation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
-  const handleSubmit = (e) => {
-    console.log(email);
-  };
   useEffect(() => {
     if (category) {
       let categoryPrice =
@@ -31,6 +28,15 @@ const Reservation = () => {
       localStorage.setItem("total", JSON.stringify(finalTotal));
     }
   }, [total.categoryPrice, quantity]);
+  const ticket = {
+    email,
+    matchNumber: location.state.ticketData.matchNumber,
+    tickets: {
+      category: parseInt(category[category.length - 1]),
+      quantity: parseInt(quantity),
+      price: parseInt(total.categoryPrice)
+    },
+  }
   return (
     <div>
       <h1>Confirm Purchase</h1>
@@ -40,7 +46,7 @@ const Reservation = () => {
           {location.state.ticketData.homeTeam}
         </h2>
         <form
-          onSubmit={handleSubmit}
+          
           style={{ display: "flex", justifyContent: "center" }}
         >
           <label>
@@ -86,11 +92,11 @@ const Reservation = () => {
         <button
           className="purchase"
           onClick={() => {
-            handleSubmit();
             if (!email) {
               return;
             }
-            navigate("/Payment");
+            console.log(ticket);
+            navigate("/Payment",{state:{ticket}});
           }}
         >
           Purchase
