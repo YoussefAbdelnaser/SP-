@@ -44,7 +44,7 @@ const Reservation = () => {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <label>
-            Email:
+            Email:{" "}
             <input
               type="email"
               name="email"
