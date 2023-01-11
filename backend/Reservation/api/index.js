@@ -11,23 +11,26 @@ const { startKafkaProducer } = require("../connectors/kafka");
 const ticketReservationSchema = require("../db/model/TicketReservation");
 const mongoose = require("mongoose");
 const mongoConnection = require("../connectors/mongo");
+const cors = require("cors");
 // Config setup to parse JSON payloads from HTTP POST request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors());
 // Register the api routes
 // HTTP endpoint to test health performance of service
 app.get("/api/health", async (req, res) => {
   return res.send("Service Health");
 });
-app.get("api/reservation/:email", async (req, res) => {
+
+app.get("/api/reservation", async (req, res) => {
   const { email } = req.query;
-  // const TicketReservation = mongoose.model(
-  //   "TicketReservation",
-  //   ticketReservationSchema
-  // );
-  // const data = await TicketReservation.findOne({ email });
-  return res.send(email);
+  await mongoConnection();
+  const TicketReservation = mongoose.model(
+    "TicketReservation",
+    ticketReservationSchema
+  );
+  const data = await TicketReservation.findOne({ email, new: false });
+  return res.json({data})
 });
 
 // HTTP endpoint to create new user

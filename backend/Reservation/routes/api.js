@@ -13,15 +13,7 @@ module.exports = (app) => {
   app.get('/api/v1/health', async (req, res) => {
     return res.send('Service Health');
   });
-  app.get("api/reservation/:email", async (req, res) => {
-    const { email } = req.query;
-    // const TicketReservation = mongoose.model(
-    //   "TicketReservation",
-    //   ticketReservationSchema
-    // );
-    // const data = await TicketReservation.findOne({ email });
-    return res.send(email);
-  });
+
   // HTTP endpoint to create new user
   app.post('/api/v1/reservation', async (req, res) => {
     try {
