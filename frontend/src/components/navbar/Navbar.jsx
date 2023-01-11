@@ -11,13 +11,13 @@ class NavBar extends Component{
         <>
         <div className="conatiner" style={{paddingBottom:"15rem"}}>
             <nav>
-                <a href="index.html">
+                <a href="/">
                     <img id="logo" src="https://i.pinimg.com/originals/eb/07/9a/eb079acaa15d96de99453600d32ada7d.png"/>
                 </a>
                 <div>
                     <ul id="navbar" className={this.state.clicked ? " #navbar active" :"#navbar"}>
                         <li><a href="/">Shop</a></li>
-                        <li><a href="/Reservation">Reservations</a></li>
+                        <li><a href="/SearchForTicketByEmail">Reservations</a></li>
                         <li><a href="/Analytics">Analytics</a></li>
                     </ul>
                 </div>

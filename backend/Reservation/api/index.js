@@ -1,28 +1,37 @@
-require('dotenv').config();
-const path = require('path');
-const express = require('express');
+require("dotenv").config();
+const path = require("path");
+const express = require("express");
 const app = express();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { v4 } = require('uuid');
-const { sendKafkaMessage } = require('../connectors/kafka');
-const { validateTicketReservationDto } = require('../validation/reservation');
-const messagesType = require('../constants/messages');
-const { startKafkaProducer } = require('../connectors/kafka');
-const ticketReservationSchema = require('../db/model/TicketReservation');
-const mongoose = require('mongoose');
-const mongoConnection = require('../connectors/mongo');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const { v4 } = require("uuid");
+const { sendKafkaMessage } = require("../connectors/kafka");
+const { validateTicketReservationDto } = require("../validation/reservation");
+const messagesType = require("../constants/messages");
+const { startKafkaProducer } = require("../connectors/kafka");
+const ticketReservationSchema = require("../db/model/TicketReservation");
+const mongoose = require("mongoose");
+const mongoConnection = require("../connectors/mongo");
 // Config setup to parse JSON payloads from HTTP POST request body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Register the api routes
 // HTTP endpoint to test health performance of service
-app.get('/api/health', async (req, res) => {
-  return res.send('Service Health');
+app.get("/api/health", async (req, res) => {
+  return res.send("Service Health");
+});
+app.get("api/reservation/:email", async (req, res) => {
+  const { email } = req.query;
+  // const TicketReservation = mongoose.model(
+  //   "TicketReservation",
+  //   ticketReservationSchema
+  // );
+  // const data = await TicketReservation.findOne({ email });
+  return res.send(email);
 });
 
 // HTTP endpoint to create new user
-app.post('/api/reservation', async (req, res) => {
+app.post("/api/reservation", async (req, res) => {
   try {
     // validate payload before proceeding with reservations
     const validationError = validateTicketReservationDto(req.body);
@@ -37,7 +46,7 @@ app.post('/api/reservation', async (req, res) => {
       body: {
         matchNumber: req.body.matchNumber,
         tickets: req.body.tickets,
-      }
+      },
     });
 
     // Perform Stripe Payment Flow
@@ -52,16 +61,16 @@ app.post('/api/reservation', async (req, res) => {
       });
       await stripe.charges.create({
         amount: req.body.tickets.quantity * req.body.tickets.price,
-        currency: 'usd',
+        currency: "usd",
         source: token.id,
-        description: 'FIFA World Cup Ticket Reservation',
+        description: "FIFA World Cup Ticket Reservation",
       });
       await sendKafkaMessage(messagesType.TICKET_RESERVED, {
         meta: { action: messagesType.TICKET_RESERVED },
         body: {
           matchNumber: req.body.matchNumber,
           tickets: req.body.tickets,
-        }
+        },
       });
     } catch (stripeError) {
       // Send cancellation message indicating ticket sale failed
@@ -70,9 +79,11 @@ app.post('/api/reservation', async (req, res) => {
         body: {
           matchNumber: req.body.matchNumber,
           tickets: req.body.tickets,
-        }
+        },
       });
-      return res.status(400).send(`could not process payment: ${stripeError.message}`);
+      return res
+        .status(400)
+        .send(`could not process payment: ${stripeError.message}`);
     }
 
     // Persist ticket sale in database with a generated reference id so user can lookup ticket
@@ -85,13 +96,16 @@ app.post('/api/reservation', async (req, res) => {
       price: req.body.tickets.price,
     };
     // await db('reservations').insert(ticketReservation);
-    await mongoConnection()
-    const TicketReservation = mongoose.model('TicketReservation', ticketReservationSchema);
+    await mongoConnection();
+    const TicketReservation = mongoose.model(
+      "TicketReservation",
+      ticketReservationSchema
+    );
     await TicketReservation.create(ticketReservation);
 
     // Return success response to client
     return res.json({
-      message: 'Ticket Purchase Successful',
+      message: "Ticket Purchase Successful",
       ...ticketReservation,
     });
   } catch (e) {

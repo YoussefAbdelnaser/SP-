@@ -34,7 +34,7 @@ const Reservation = () => {
          <div className="content">
            <h2>Match: {location.state.ticketData.awayTeam} VS {location.state.ticketData.homeTeam}</h2>
            <h3>
-             <span>Category: </span>
+             <span className="category">Category: </span>
              <select className="list" onChange={(e)=>setCategory(e.target.value)}>
                  <option value="none" selected disabled hidden>Select Category</option>
                  <option value="category1">Category 1</option>
@@ -42,7 +42,7 @@ const Reservation = () => {
                  <option value="category3">Category 3</option>
              </select></h3>
            <h3>
-             <span>Quantity: </span>
+             <span className="quantity">Quantity: </span>
              <select className="list" onChange={(e)=>setQuantity(e.target.value)}>
                    <option value="none" selected disabled hidden>Select Quantity</option>
                    <option value="1">1</option>

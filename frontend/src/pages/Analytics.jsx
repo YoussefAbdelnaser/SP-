@@ -10,6 +10,7 @@ import {
   CartesianGrid,
   Bar,
 } from "recharts";
+import "./shop/Analytics.css"
 
 const Analytics = () => {
   const data = [
@@ -19,7 +20,7 @@ const Analytics = () => {
   ];
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="BackGround" style={{ textAlign: "center" }}>
       <h1>Tickets Analytics</h1>
       <div className="App">
         <PieChart width={400} height={400}>
@@ -30,7 +31,7 @@ const Analytics = () => {
             cx={200}
             cy={200}
             outerRadius={80}
-            fill="#8884d8"
+            fill="#A62D12"
             label
           />
           <Tooltip />
@@ -56,7 +57,7 @@ const Analytics = () => {
           <Tooltip />
           <Legend />
           <CartesianGrid strokeDasharray="3 3" />
-          <Bar dataKey="users" fill="#8884d8" background={{ fill: "#eee" }} />
+          <Bar dataKey="users" fill="#A62D12" background={{ fill: "#eee" }} />
         </BarChart>
       </div>
     </div>

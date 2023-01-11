@@ -1,3 +1,8 @@
+.category{
+    padding: 5px;
+    margin: 5px;
+}
+
 h1{
     font-weight: bold;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,38 +31,42 @@ h3{
 }
 
 .list{
+    border-radius: 15px;
+    width: 250px;
+    height: 50px;
+    padding: 15 px;
     color: white;
     font-weight: bold;
     font-size: 20px;
     width: 200px;
-    background-color: black;
+    background-color: #590F08;
     margin-left: -40px;
     margin-top: 20px;
 }
 
 .purchase{
-    width: 150px;
+    justify-content: center;
+    width: 250px;
     color: white;
     font-size: 23px;
-    font-weight: bold;
-    background-color: rgb(233, 12, 196);
-    border-radius: 5px;
+    background-color: #590F08;
+    border-radius: 15px;
     margin-left: 590px;
     margin-top: 50px;
     border: none;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
-
 .purchase:hover{
     transition-duration: 0.4s;
-    width: 150px;
+    width: 250px;
     color: white;
     font-size: 23px;
-    font-weight: bold;
-    background-color: rgb(90, 4, 68);
-    border-radius: 5px;
+    background-color: #023059;
+    border-radius: 15px;
     margin-left: 590px;
     margin-top: 50px;
     border: none;
     cursor: pointer;
+    box-shadow: 0 0 25px #000;
 }

@@ -8,22 +8,23 @@ import Tickets from "./pages/shop/Tickets";
 import Reservation from "./pages/reservation/Reservation"
 import Payment from "./pages/Payments/Payment"
 import Analytics from "./pages/Analytics";
+import ReservationBar from "./pages/ReservationBar/ReservationBar"
 
 function App() {
   return (
     <div>
-      
       <BrowserRouter>
-      <Navbar/>
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Tickets />} />
+          <Route path="/SearchForTicketByEmail" element={<ReservationBar/>} />
           <Route path="/Analytics" element={<Analytics />} />
           <Route path="/Reservation" element={<Reservation />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </BrowserRouter>
-      
+       
     </div>
   );
 }
