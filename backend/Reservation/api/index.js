@@ -24,13 +24,16 @@ app.get("/api/health", async (req, res) => {
 
 app.get("/api/reservation", async (req, res) => {
   const { email } = req.query;
+  if (!email) {
+    return;
+  }
   await mongoConnection();
   const TicketReservation = mongoose.model(
     "TicketReservation",
     ticketReservationSchema
   );
   const data = await TicketReservation.findOne({ email, new: false });
-  return res.json({data})
+  return res.json({ data });
 });
 
 // HTTP endpoint to create new user
@@ -84,6 +87,8 @@ app.post("/api/reservation", async (req, res) => {
           tickets: req.body.tickets,
         },
       });
+      res.set("Access-Control-Allow-Origin", "*");
+
       return res
         .status(400)
         .send(`could not process payment: ${stripeError.message}`);
