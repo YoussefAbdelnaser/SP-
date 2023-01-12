@@ -28,7 +28,6 @@ function SearchPurchases() {
     };
     ticketDetails.email = email;
     const reservation = { email, ...ticketDetails, card: card };
-    console.log(reservation);
 
     fetch("http://localhost:3000/api/reservation", {
       method: "POST",
