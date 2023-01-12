@@ -1,0 +1,36 @@
+.emailForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .emailLabel {
+    margin-bottom: 10px;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  
+  .emailInput [type='email'] {
+    justify-content: center;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 20px solid #ccc;
+  }
+  
+  .submitBTN [type='submit'] {
+    background-color: #af4c4c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .submitBTN [type='submit']:hover {
+    background-color: #571111;
+  }
+  
